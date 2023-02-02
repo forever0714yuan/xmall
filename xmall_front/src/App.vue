@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-//搜索
+//搜索sss
 @import 'assets/style/index.scss';
 #app {
   height: 100%;
