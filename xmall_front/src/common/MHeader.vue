@@ -32,18 +32,27 @@
                       <!-- 头像 -->
                       <li class="nav-user-avatar">
                         <div>
-                          <span class="avatar" :style="{backgroundImage:'url('+userInfo.file+')'}"></span>
+                          <span
+                            class="avatar"
+                            :style="{
+                              backgroundImage: 'url(' + userInfo.file + ')',
+                            }"
+                          ></span>
                         </div>
-                        <p class="name">{{userInfo.username}}</p>
+                        <p class="name">{{ userInfo.username }}</p>
                       </li>
                       <li>
                         <router-link to="/user/orderList">我的订单</router-link>
                       </li>
                       <li>
-                        <router-link to="/user/information">账号资料</router-link>
+                        <router-link to="/user/information"
+                          >账号资料</router-link
+                        >
                       </li>
                       <li>
-                        <router-link to="/user/addressList">收货地址</router-link>
+                        <router-link to="/user/addressList"
+                          >收货地址</router-link
+                        >
                       </li>
                       <li>
                         <router-link to="/user/support">售后服务</router-link>
@@ -67,7 +76,9 @@
               >
                 <router-link to="/cart"></router-link>
                 <span class="cart-num">
-                  <i class="num" :class="{no:totalNum == 0}">{{totalNum}}</i>
+                  <i class="num" :class="{ no: totalNum == 0 }">{{
+                    totalNum
+                  }}</i>
                 </span>
 
                 <!-- 购物车显示 -->
@@ -76,23 +87,31 @@
                     <div class="full">
                       <div class="nav-cart-items">
                         <ul>
-                          <li class="clearfix" v-for="(goods,index) in cartList" :key="index">
+                          <li
+                            class="clearfix"
+                            v-for="(goods, index) in cartList"
+                            :key="index"
+                          >
                             <div class="cart-item">
                               <div class="cart-item-inner">
                                 <a>
                                   <div class="item-thumb">
-                                    <img :src="goods.productImageBig">
+                                    <img :src="goods.productImageBig" />
                                   </div>
                                   <div class="item-desc">
                                     <div class="cart-cell">
                                       <h4>
-                                        <a href>{{goods.productName}}</a>
+                                        <a href>{{ goods.productName }}</a>
                                       </h4>
                                       <!-- <p class="attrs"><span>白色</span></p> -->
                                       <h6>
                                         <span class="price-icon">¥</span>
-                                        <span class="price-num">{{goods.salePrice}}</span>
-                                        <span class="item-num">x {{goods.productNum}}</span>
+                                        <span class="price-num">{{
+                                          goods.salePrice
+                                        }}</span>
+                                        <span class="item-num"
+                                          >x {{ goods.productNum }}</span
+                                        >
                                       </h6>
                                     </div>
                                   </div>
@@ -107,19 +126,23 @@
                       <div class="nav-cart-total">
                         <p>
                           共
-                          <strong>{{totalNum}}</strong> 件商品
+                          <strong>{{ totalNum }}</strong> 件商品
                         </p>
                         <h5>
                           合计：
                           <span class="price-icon">¥</span>
-                          <span class="price-num">{{totalPrice}}</span>
+                          <span class="price-num">{{ totalPrice }}</span>
                         </h5>
                         <h6>
                           <el-button type="danger">去购物车</el-button>
                         </h6>
                       </div>
                     </div>
-                    <div style="height: 313px;text-align: center" class="cart-con" v-if='!totalNum'>
+                    <div
+                      style="height: 313px; text-align: center"
+                      class="cart-con"
+                      v-if="!totalNum"
+                    >
                       <p>您的购物车竟然是空的!</p>
                     </div>
                   </div>
@@ -135,10 +158,18 @@
           <div class="nav-sub-wrapper">
             <div class="w">
               <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{path:'/goods'}">全部</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{path:'/goods?cid=1184'}">品牌周边</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{path:'/thanks'}">捐赠名单</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: '/' }"
+                  >首页</el-breadcrumb-item
+                >
+                <el-breadcrumb-item :to="{ path: '/goods' }"
+                  >全部</el-breadcrumb-item
+                >
+                <el-breadcrumb-item :to="{ path: '/goods?cid=1184' }"
+                  >品牌周边</el-breadcrumb-item
+                >
+                <el-breadcrumb-item :to="{ path: '/thanks' }"
+                  >捐赠名单</el-breadcrumb-item
+                >
               </el-breadcrumb>
             </div>
           </div>
@@ -149,17 +180,17 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import { removeStore, getStore, setStore } from "@/utils/storage";
+import { mapState, mapMutations } from 'vuex';
+import { removeStore, getStore, setStore } from '@/utils/storage';
 
 export default {
   data() {
     return {
-      productInfo: ""
+      productInfo: '',
     };
   },
   computed: {
-    ...mapState(["login", "userInfo", "cartList", "showCart"]),
+    ...mapState(['login', 'userInfo', 'cartList', 'showCart']),
     totalNum() {
       return (
         this.cartList &&
@@ -169,7 +200,7 @@ export default {
         }, 0)
       );
     },
-    totalPrice(){
+    totalPrice() {
       return (
         this.cartList &&
         this.cartList.reduce((total, item) => {
@@ -177,13 +208,15 @@ export default {
           return total;
         }, 0)
       );
-    }
+    },
   },
   async mounted() {
     if (this.login) {
-      const res = await this.$http.post("/api/cartList", { userId: getStore("id") });
+      const res = await this.$http.post('/api/cartList', {
+        userId: getStore('id'),
+      });
       if (res.data.success === true) {
-        setStore("buyCart", res.data.cartList.cartList);
+        setStore('buyCart', res.data.cartList.cartList);
         this.INITBUYCART();
       }
     } else {
@@ -191,25 +224,25 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["SHOWCART", "INITBUYCART"]),
+    ...mapMutations(['SHOWCART', 'INITBUYCART']),
     cartShowState(state) {
       this.SHOWCART({
-        showCart: state
+        showCart: state,
       });
     },
     logout() {
-      removeStore("token");
-      removeStore("buyCart");
-      window.location.href = "/";
-    }
+      removeStore('token');
+      removeStore('buyCart');
+      window.location.href = '/';
+    },
   },
-  created() {}
+  created() {},
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/style/theme";
-@import "../assets/style/mixin";
+@import '../assets/style/theme';
+@import '../assets/style/mixin';
 .w-box .nav-list .el-input {
   margin-right: 10px;
 }
@@ -276,7 +309,7 @@ header {
     &:before {
       background: #333;
       background: hsla(0, 0%, 100%, 0.2);
-      content: " ";
+      content: ' ';
       @include wh(1px, 13px);
       overflow: hidden;
       // position: absolute;
@@ -345,7 +378,7 @@ header {
       display: block;
       text-indent: -9999px;
       &:before {
-        content: " ";
+        content: ' ';
         position: absolute;
         left: 8px;
         top: 0;
@@ -379,7 +412,7 @@ header {
         @include wh(46px);
         text-align: center;
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           right: 0;
@@ -424,7 +457,7 @@ header {
     z-index: 99;
     &:hover {
       a:before {
-        content: " ";
+        content: ' ';
         background-position: 0 -22px;
       }
     }
@@ -446,7 +479,7 @@ header {
       &:before {
         display: block;
         @include wh(30px, 100%);
-        content: " ";
+        content: ' ';
         background: url(/static/images/account-icon@2x.32d87deb02b3d1c3cc5bcff0c26314ac.png)
           0 -22px;
         background-size: 240px 107px;
@@ -532,7 +565,7 @@ header {
         height: 80px;
         border-radius: 3px;
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           right: 0;
@@ -693,7 +726,7 @@ header {
     z-index: 10;
     &:before {
       position: absolute;
-      content: " ";
+      content: ' ';
       background: url(/static/images/account-icon@2x.32d87deb02b3d1c3cc5bcff0c26314ac.png)
         no-repeat -49px -43px;
       background-size: 240px 107px;
@@ -732,7 +765,7 @@ header {
       align-items: center;
     }
     &:after {
-      content: " ";
+      content: ' ';
       position: absolute;
       top: 89px;
       left: 50%;
@@ -779,7 +812,7 @@ header {
       }
     }
     li:before {
-      content: " ";
+      content: ' ';
       position: absolute;
       left: 0;
       top: 13px;
@@ -809,13 +842,13 @@ header {
 
 .cart-con:before {
   position: absolute;
-  content: " ";
+  content: ' ';
   left: 50%;
   transform: translate(-50%, -70%);
   top: 50%;
   width: 76px;
   height: 62px;
-  background: url("/static/images/cart-empty-new.png") no-repeat;
+  background: url('/static/images/cart-empty-new.png') no-repeat;
   background-size: cover;
 }
 </style>
